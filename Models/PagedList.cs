@@ -1,0 +1,39 @@
+using System.Collections.Generic;
+
+namespace Infrastructure.Service.Model
+{
+    public class PagedList<TModel>
+    {
+        public Page Paged { get; set; }
+        public IEnumerable<TModel> Data { get; private set; }
+
+        public PagedList(Page paged, IEnumerable<TModel> data)
+        {
+            Paged = paged;
+            Data = data;
+        }
+    }
+
+    public class Page
+    {
+        public int TotalItemCount { get; set; }
+        public int ItemCount { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public int Duration { get; set; }
+        public int QueryDuration { get; set; }
+        public int TotalTime { get; set; }
+
+        public static Page Create(int pageIndex, int pageSize, int totalItemCount, int itemCount, int queryDuration)
+        {
+            return new Page
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalItemCount = totalItemCount,
+                ItemCount = itemCount,
+                QueryDuration = queryDuration
+            };
+        }
+    }
+}
