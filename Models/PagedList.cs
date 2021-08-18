@@ -16,8 +16,8 @@ namespace Infrastructure.Service.Model
 
     public class Page
     {
-        public int TotalItemCount { get; set; }
-        public int ItemCount { get; set; }
+        public int TotalCount { get; set; }
+        public int Count { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public int Duration { get; set; }
@@ -30,8 +30,8 @@ namespace Infrastructure.Service.Model
             {
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                TotalItemCount = totalItemCount,
-                ItemCount = itemCount,
+                TotalCount = totalItemCount,
+                Count = itemCount,
                 QueryDuration = queryDuration
             };
         }

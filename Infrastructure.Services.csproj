@@ -16,12 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="icon.jpg" Pack="true" PackagePath="\"/>
+    <None Include="icon.jpg" Pack="true" PackagePath="\" />
   </ItemGroup>  
 
   <ItemGroup>
     <PackageReference Include="Infrastructure.Repository" Version="1.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.14" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.12" />
   </ItemGroup>
 
 </Project>
