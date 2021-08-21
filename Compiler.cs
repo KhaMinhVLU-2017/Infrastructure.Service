@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Infrastructure.Service.Model;
-using Infrastructure.Service.Parser;
+using Infrastructure.Service.TypeParser;
 using Infrastructure.Service.Operate;
 using Infrastructure.Service.Abstraction;
 
@@ -31,7 +31,7 @@ namespace Infrastructure.Service
             return $"{tupleParse.Item1} {tupleParse.Item2} {tupleParse.Item3}";
         }
 
-        private Criteria DeserializeFilter(string filters)
+        public Criteria DeserializeFilter(string filters)
         {
             Criteria criteria = JsonConvert.DeserializeObject<Criteria>(filters);
             if (criteria == null)
@@ -47,6 +47,13 @@ namespace Infrastructure.Service
             var operateParse = operate.Parse();
             var typeParser = typeCriteria.ParseByVal(criteria.OperateValue);
             return new Tuple<string, string, string>(criteria.OperateKey, operateParse.Item2, typeParser.Item2);
+        }
+
+        public bool IsHasOperateAndParser(Criteria criteria)
+        {
+            bool isHasOperate = _dicOperate.TryGetValue(criteria.Operate, out var operate);
+            bool isHasParser = _dicParser.TryGetValue(criteria.OperateType, out var typeCriteria);
+            return isHasOperate & isHasParser;
         }
     }
 }

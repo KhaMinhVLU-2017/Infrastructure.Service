@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Infrastructure.Service.Model;
 using Infrastructure.Service.Common;
-using Infrastructure.Service.Parser;
 using Infrastructure.Service.Operate;
-using Microsoft.Extensions.DependencyInjection;
+using Infrastructure.Service.Validation;
+using Infrastructure.Service.TypeParser;
 using Infrastructure.Service.Abstraction;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Service.Extension
 {
@@ -35,7 +38,16 @@ namespace Infrastructure.Service.Extension
                 return parses;
             });
 
-            serviceCollection.AddScoped<ICompiler, Compiler>();
+            serviceCollection.AddSingleton<DynamicSearch>(services =>
+            {
+                var configuration = services.GetRequiredService<IConfiguration>();
+                var dynamic = new DynamicSearch();
+                configuration.GetSection("DynamicSearch").Bind(dynamic);
+                return dynamic;
+            });
+
+            serviceCollection.AddSingleton<ICompiler, Compiler>();
+            serviceCollection.AddSingleton<IValidation, SearchValidation>();
         }
     }
 }

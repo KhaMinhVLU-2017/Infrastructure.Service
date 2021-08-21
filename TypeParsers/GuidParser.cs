@@ -1,7 +1,7 @@
 using System;
 using Infrastructure.Service.Common;
 
-namespace Infrastructure.Service.Parser
+namespace Infrastructure.Service.TypeParser
 {
     public class GuidParser : BaseParser
     {

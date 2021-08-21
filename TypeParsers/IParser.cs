@@ -1,6 +1,6 @@
 using System;
 
-namespace Infrastructure.Service.Parser
+namespace Infrastructure.Service.TypeParser
 {
     public interface IParser
     {
