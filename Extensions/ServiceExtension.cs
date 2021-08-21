@@ -31,11 +31,12 @@ namespace Infrastructure.Service.Extension
             serviceCollection.AddSingleton<IDictionary<string, IParser>>(Services =>
             {
                 var comparer = StringComparer.OrdinalIgnoreCase;
-                var parses = new Dictionary<string, IParser>(comparer);
-                parses.Add(Constant.NUMBER_TYPE, new NumberParser());
-                parses.Add(Constant.TEXT_TYPE, new TextParser());
-                parses.Add(Constant.GUID_TYPE, new GuidParser());
-                return parses;
+                var parsers = new Dictionary<string, IParser>(comparer);
+                parsers.Add(Constant.NUMBER_TYPE, new NumberParser());
+                parsers.Add(Constant.TEXT_TYPE, new TextParser());
+                parsers.Add(Constant.GUID_TYPE, new GuidParser());
+                parsers.Add(Constant.DATETIME_TYPE, new DateTimeParser());
+                return parsers;
             });
 
             serviceCollection.AddSingleton<DynamicSearch>(services =>

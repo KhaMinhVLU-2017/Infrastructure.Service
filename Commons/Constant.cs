@@ -15,5 +15,6 @@ namespace Infrastructure.Service.Common
         public const string NUMBER_TYPE = "number";
         public const string TEXT_TYPE = "text";
         public const string GUID_TYPE = "guid";
+        public const string DATETIME_TYPE = "datetime";
     }
 }

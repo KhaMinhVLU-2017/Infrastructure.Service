@@ -17,7 +17,12 @@ namespace Infrastructure.Service.Validation
 
         public void Validate(BaseCriteria criteria)
         {
+            if (string.IsNullOrEmpty(criteria.Filters))
+                return;
+
             var criteriaFilter = _compiler.DeserializeFilter(criteria.Filters);
+
+            // TODO Validate key if it hidden
 
             if (!_compiler.IsHasOperateAndParser(criteriaFilter))
                 throw new SyntaxException();
