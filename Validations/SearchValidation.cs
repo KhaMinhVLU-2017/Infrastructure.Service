@@ -15,7 +15,7 @@ namespace Infrastructure.Service.Validation
             _dynamicConfig = dynamicConfig;
         }
 
-        public void CanApply(BaseCriteria criteria)
+        public void Validate(BaseCriteria criteria)
         {
             var criteriaFilter = _compiler.DeserializeFilter(criteria.Filters);
 

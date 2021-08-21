@@ -4,6 +4,6 @@ namespace Infrastructure.Service.Abstraction
 {
     public interface IValidation
     {
-        void CanApply(BaseCriteria criteria);
+        void Validate(BaseCriteria criteria);
     }
 }
