@@ -25,17 +25,17 @@ namespace Infrastructure.Service
             if (criteria.Filters == "{}" || string.IsNullOrEmpty(criteria.Filters))
                 return String.Empty;
             // Deserialize Filter
-            var modelCriteria = DeserializeFilter(criteria.Filters);
+            var modelCriteria = DeserializeModel<Criteria>(criteria.Filters);
             // Build string operate hand
             var tupleParse = ParseCriteria(modelCriteria);
             return $"{tupleParse.Item1} {tupleParse.Item2} {tupleParse.Item3}";
         }
 
-        public Criteria DeserializeFilter(string filters)
+        public T DeserializeModel<T>(string filters)
         {
-            Criteria criteria = JsonConvert.DeserializeObject<Criteria>(filters);
+            T criteria = JsonConvert.DeserializeObject<T>(filters);
             if (criteria == null)
-                return null;
+                return default(T);
             return criteria;
         }
 

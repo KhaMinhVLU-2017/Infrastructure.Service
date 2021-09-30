@@ -6,6 +6,7 @@ using System.Linq.Dynamic.Core;
 using System.Collections.Generic;
 using Infrastructure.Service.Model;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Service.Extension;
 using Infrastructure.Service.Abstraction;
 using Infrastructure.Repository.Model.Generic;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,6 +68,7 @@ namespace Infrastructure.Service
                 var compiler = scope.ServiceProvider.GetRequiredService<ICompiler>();
                 var query = AsQueryable(context);
                 query = BuildDynamicCriteria(query, compiler, criteria);
+                query = BuildSort(query, compiler, criteria);
 
                 var (pageIndex, pageSize) = HandlerPaging(criteria);
                 var totalItemCount = await query.CountAsync();
@@ -89,6 +91,7 @@ namespace Infrastructure.Service
                 var compiler = scope.ServiceProvider.GetRequiredService<ICompiler>();
                 var query = AsQueryable(context);
                 query = BuildDynamicCriteria(query, compiler, criteria);
+                query = BuildSort(query, compiler, criteria);
 
                 var (pageIndex, pageSize) = HandlerPaging(criteria);
                 query = query.Skip(pageIndex * pageSize).Take(pageSize);
@@ -97,12 +100,19 @@ namespace Infrastructure.Service
             }
         }
 
+
         private IQueryable<TEntity> BuildDynamicCriteria(IQueryable<TEntity> entities, ICompiler compiler, TCriteria criteria)
         {
             string dynamicQuery = compiler.BuildQueryString(criteria);
             if (string.IsNullOrEmpty(dynamicQuery))
                 return entities;
             return entities.Where(dynamicQuery);
+        }
+
+        private IQueryable<TEntity> BuildSort(IQueryable<TEntity> entities, ICompiler compiler, TCriteria criteria)
+        {
+            var sortCriteria = compiler.DeserializeModel<Sort>(criteria.Sorts);
+            return ExpressionHelper.OrderBy<TEntity>(entities, sortCriteria);
         }
 
         private IQueryable<TEntity> AsQueryable(object context)
