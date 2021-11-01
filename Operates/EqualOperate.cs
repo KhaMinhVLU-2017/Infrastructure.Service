@@ -6,14 +6,14 @@ namespace Infrastructure.Service.Operate
     public class EqualOperate : Operate
     {
 
-        public override void BuildOperate()
+        public EqualOperate()
         {
             TYPE = "==";
         }
 
-        public override Tuple<string, string> PraseLamda()
+        public override Tuple<string, bool, string> Parse()
         {
-            return new Tuple<string, string>(Constant.EQUAL_OPERATE, TYPE);
+            return new Tuple<string, bool, string>(string.Empty, false, TYPE);
         }
     }
 }

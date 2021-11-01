@@ -19,6 +19,8 @@ namespace Infrastructure.Service.Extension
             {
                 var comparer = StringComparer.OrdinalIgnoreCase;
                 var operate = new Dictionary<string, IOperate>(comparer);
+                operate.Add(Constant.IN_OPERATE, new InOperate());
+                operate.Add(Constant.NOT_IN_OPERATE, new NotInOperate());
                 operate.Add(Constant.EQUAL_OPERATE, new EqualOperate());
                 operate.Add(Constant.NOT_EQUAL_OPERATE, new NotEqualOperate());
                 operate.Add(Constant.LESS_THAN_OPERATE, new LessThanOperate());
@@ -28,27 +30,18 @@ namespace Infrastructure.Service.Extension
                 return operate;
             });
 
-            serviceCollection.AddSingleton<IDictionary<string, IParser>>(Services =>
-            {
-                var comparer = StringComparer.OrdinalIgnoreCase;
-                var parsers = new Dictionary<string, IParser>(comparer);
-                parsers.Add(Constant.NUMBER_TYPE, new NumberParser());
-                parsers.Add(Constant.TEXT_TYPE, new TextParser());
-                parsers.Add(Constant.GUID_TYPE, new GuidParser());
-                parsers.Add(Constant.DATETIME_TYPE, new DateTimeParser());
-                return parsers;
-            });
+            serviceCollection.AddScoped<IParser, BaseParser>();
 
-            serviceCollection.AddSingleton<DynamicSearch>(services =>
+            serviceCollection.AddSingleton<DynamicConfig>(services =>
             {
                 var configuration = services.GetRequiredService<IConfiguration>();
-                var dynamic = new DynamicSearch();
+                var dynamic = new DynamicConfig();
                 configuration.GetSection("DynamicSearch").Bind(dynamic);
                 return dynamic;
             });
 
-            serviceCollection.AddSingleton<ICompiler, Compiler>();
-            serviceCollection.AddSingleton<IValidation, SearchValidation>();
+            serviceCollection.AddScoped<ICompiler, Compiler>();
+            serviceCollection.AddScoped<IValidation, SearchValidation>();
         }
     }
 }

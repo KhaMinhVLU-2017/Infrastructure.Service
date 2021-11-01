@@ -4,6 +4,7 @@ namespace Infrastructure.Service.TypeParser
 {
     public interface IParser
     {
-        Tuple<string, string> ParseByVal(string val);
+        void SetTypeValue(Type type);
+        object ParseByVal(string val);
     }
 }

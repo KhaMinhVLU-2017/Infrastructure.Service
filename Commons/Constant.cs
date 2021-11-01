@@ -3,6 +3,8 @@ namespace Infrastructure.Service.Common
     public static class Constant
     {
         // Operate
+        public const string IN_OPERATE = "in";
+        public const string NOT_IN_OPERATE = "nin";
         public const string EQUAL_OPERATE = "eq";
         public const string NOT_EQUAL_OPERATE = "neq";
         public const string LESS_THAN_OPERATE = "lt";

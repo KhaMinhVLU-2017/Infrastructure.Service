@@ -6,14 +6,6 @@ namespace Infrastructure.Service.Operate
     {
         protected string TYPE = "";
 
-        public abstract void BuildOperate();
-
-        public Tuple<string, string> Parse()
-        {
-            BuildOperate();
-            return PraseLamda();
-        }
-
-        public abstract Tuple<string, string> PraseLamda();
+        public abstract Tuple<string, bool, string> Parse();
     }
 }

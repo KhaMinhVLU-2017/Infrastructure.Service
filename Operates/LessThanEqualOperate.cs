@@ -5,14 +5,14 @@ namespace Infrastructure.Service.Operate
 {
     public class LessThanEqualOperate : Operate
     {
-        public override void BuildOperate()
+        public LessThanEqualOperate()
         {
             TYPE = "<=";
         }
 
-        public override Tuple<string, string> PraseLamda()
+        public override Tuple<string, bool, string> Parse()
         {
-            return new Tuple<string, string>(Constant.LESS_THAN_EQUAL_OPERATE, TYPE);
+            return new Tuple<string, bool, string>(string.Empty, false, TYPE);
         }
     }
 }

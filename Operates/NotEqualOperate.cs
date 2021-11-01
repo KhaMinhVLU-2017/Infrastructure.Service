@@ -1,18 +1,17 @@
 using System;
-using Infrastructure.Service.Common;
 
 namespace Infrastructure.Service.Operate
 {
     public class NotEqualOperate : Operate
     {
-        public override void BuildOperate()
+        public NotEqualOperate()
         {
             TYPE = "!=";
         }
 
-        public override Tuple<string, string> PraseLamda()
+        public override Tuple<string, bool, string> Parse()
         {
-            return new Tuple<string, string>(Constant.NOT_EQUAL_OPERATE, TYPE);
+            return new Tuple<string, bool, string>(string.Empty, false, TYPE);
         }
     }
 }

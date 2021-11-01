@@ -67,8 +67,7 @@ namespace Infrastructure.Service
                 var context = scope.ServiceProvider.GetService(dbType);
                 var compiler = scope.ServiceProvider.GetRequiredService<ICompiler>();
                 var query = AsQueryable(context);
-                query = BuildDynamicCriteria(query, compiler, criteria);
-                query = BuildSort(query, compiler, criteria);
+                query = BuildQuery(query, compiler, criteria);
 
                 var (pageIndex, pageSize) = HandlerPaging(criteria);
                 var totalItemCount = await query.CountAsync();
@@ -90,8 +89,7 @@ namespace Infrastructure.Service
                 var context = scope.ServiceProvider.GetService(dbType);
                 var compiler = scope.ServiceProvider.GetRequiredService<ICompiler>();
                 var query = AsQueryable(context);
-                query = BuildDynamicCriteria(query, compiler, criteria);
-                query = BuildSort(query, compiler, criteria);
+                query = BuildQuery(query, compiler, criteria);
 
                 var (pageIndex, pageSize) = HandlerPaging(criteria);
                 query = query.Skip(pageIndex * pageSize).Take(pageSize);
@@ -100,19 +98,20 @@ namespace Infrastructure.Service
             }
         }
 
-
-        private IQueryable<TEntity> BuildDynamicCriteria(IQueryable<TEntity> entities, ICompiler compiler, TCriteria criteria)
+        private IQueryable<TEntity> BuildQuery(IQueryable<TEntity> entities, ICompiler compiler, TCriteria criteria)
         {
-            string dynamicQuery = compiler.BuildQueryString(criteria);
-            if (string.IsNullOrEmpty(dynamicQuery))
-                return entities;
-            return entities.Where(dynamicQuery);
-        }
+            compiler.SetEntityType(typeof(TEntity));
+            var (dynamicFilter, paramsQuery) = compiler.BuildQueryString(criteria);
+            if (!string.IsNullOrEmpty(dynamicFilter))
+                entities = entities.Where(dynamicFilter, paramsQuery);
 
-        private IQueryable<TEntity> BuildSort(IQueryable<TEntity> entities, ICompiler compiler, TCriteria criteria)
-        {
-            var sortCriteria = compiler.DeserializeModel<Sort>(criteria.Sorts);
-            return ExpressionHelper.OrderBy<TEntity>(entities, sortCriteria);
+            if (criteria.Sorts != null && !string.IsNullOrEmpty(criteria.Sorts))
+            {
+                var sortCriteria = compiler.DeserializeModel<Sort>(criteria.Sorts);
+                entities = ExpressionHelper.OrderBy<TEntity>(entities, sortCriteria);
+            }
+
+            return entities;
         }
 
         private IQueryable<TEntity> AsQueryable(object context)

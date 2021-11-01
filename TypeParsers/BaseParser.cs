@@ -1,21 +1,48 @@
 using System;
+using System.ComponentModel;
 
 namespace Infrastructure.Service.TypeParser
 {
-    public abstract class BaseParser : IParser
+    public class BaseParser : IParser
     {
-        protected string TYPE;
+        private Type _typeValue;
 
-        public abstract void BuildParse();
-
-        public Tuple<string, string> Parse()
+        public object ParseByVal(string val)
         {
-            BuildParse();
-            return PraseLamda();
+            return ConvertValueToPrmitive(val);
         }
 
-        public abstract Tuple<string, string> ParseByVal(string val);
+        protected object ConvertValueToPrmitive(string val)
+        {
+            if (!val.Contains(","))
+            {
+                return ConvertValueToType(val);
+            }
 
-        public abstract Tuple<string, string> PraseLamda();
+            string[] values = val.Split(",");
+            Type arr = _typeValue.MakeArrayType();
+            dynamic lstPrimnitive = Activator.CreateInstance(arr, values.Length);
+            for (int i = 0; i < values.Length; i++)
+            {
+                var value = values[i];
+                var valuePrimitive = ConvertValueToType(value);
+                lstPrimnitive[i] = valuePrimitive;
+            }
+
+            object result = lstPrimnitive;
+            return result;
+        }
+
+        private dynamic ConvertValueToType(string val)
+        {
+            var converter = TypeDescriptor.GetConverter(_typeValue);
+            var result = converter.ConvertFromString(val);
+            return result;
+        }
+
+        public void SetTypeValue(Type type)
+        {
+            _typeValue = type;
+        }
     }
 }
