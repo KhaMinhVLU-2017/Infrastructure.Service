@@ -13,6 +13,9 @@
     </Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>icon.jpg</PackageIcon>
+    <PackageProjectUrl>https://www.mnlifeblog.com/posts/Dynamic-Search-post21.html</PackageProjectUrl>
+    <PackageTags>.NET ASP.NET .NetCore LINQ DynamicSearch EFCore</PackageTags>
+     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
