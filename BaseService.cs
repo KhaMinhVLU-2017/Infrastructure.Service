@@ -47,10 +47,10 @@ namespace Infrastructure.Service
             page = await pageTask;
             data = await dataTask;
 
-            int durationTime = DateTime.UtcNow.Subtract(startDuration).Milliseconds;
+            double durationTime = DateTime.UtcNow.Subtract(startDuration).Milliseconds;
             // End duration
 
-            int totalTime = DateTime.UtcNow.Subtract(start).Milliseconds;
+            double totalTime = DateTime.UtcNow.Subtract(start).Milliseconds;
             page.TotalTime = totalTime;
             page.Duration = durationTime;
             return new PagedList<TModel>(page, data);

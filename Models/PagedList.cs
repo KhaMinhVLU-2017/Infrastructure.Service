@@ -20,11 +20,11 @@ namespace Infrastructure.Service.Model
         public int Count { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public int Duration { get; set; }
-        public int QueryDuration { get; set; }
-        public int TotalTime { get; set; }
+        public double Duration { get; set; }
+        public double QueryDuration { get; set; }
+        public double TotalTime { get; set; }
 
-        public static Page Create(int pageIndex, int pageSize, int totalItemCount, int itemCount, int queryDuration)
+        public static Page Create(int pageIndex, int pageSize, int totalItemCount, int itemCount, double queryDuration)
         {
             return new Page
             {
