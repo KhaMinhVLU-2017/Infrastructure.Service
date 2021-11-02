@@ -1,15 +1,15 @@
 # Infrastructure Service
 
 ### Description
+
 Its effects on the fluent syntax of Linq keep deferred execution after the build so good for performance.
 
 ### Main Features:
-* Paging
-* Projection
-* Dynamic search
-* Limit operate
-* Limit key for search
 
-You can view more installation & setup guid __[Infrastructure Service](https://www.mnlifeblog.com/posts/Dynamic-Search-post21.html)__
+- Dynamic search without **type** of **key**
+- You can build the query you want it todo.
+- Count timing query duration.
 
-__Thanks for watching...!__
+You can view more installation & setup guid **[Infrastructure Service](https://www.mnlifeblog.com/posts/Dynamic-Search-post21.html)**
+
+**Thanks for watching...!**
