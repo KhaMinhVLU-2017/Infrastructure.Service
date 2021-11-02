@@ -7,6 +7,6 @@ namespace Infrastructure.Service.Abstraction
     {
         T DeserializeModel<T>(string filters);
         void SetEntityType(Type callback);
-        Tuple<string, object> BuildQueryString(BaseCriteria criteria);
+        Tuple<string, object[]> BuildQueryString(BaseCriteria criteria);
     }
 }

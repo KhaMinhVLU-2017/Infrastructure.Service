@@ -19,10 +19,7 @@ namespace Infrastructure.Service.Validation
             if (string.IsNullOrEmpty(criteria.Filters))
                 return;
 
-            var criteriaFilter = _compiler.DeserializeModel<Criteria>(criteria.Filters);
-
             // TODO Validate key if it hidden
         }
-
     }
 }
