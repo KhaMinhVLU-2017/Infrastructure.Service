@@ -134,7 +134,7 @@ namespace Infrastructure.Service
             Type et = _entityType;
             foreach (var k in keys)
             {
-                PropertyInfo p = et.GetProperties().First(s => s.Name.Equals(key, StringComparison.OrdinalIgnoreCase));
+                PropertyInfo p = et.GetProperties().First(s => s.Name.Equals(k, StringComparison.OrdinalIgnoreCase));
                 et = p.PropertyType;
             }
             return et;
