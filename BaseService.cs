@@ -51,8 +51,8 @@ namespace Infrastructure.Service
             // End duration
 
             double totalTime = DateTime.UtcNow.Subtract(start).Milliseconds;
-            page.TotalTime = totalTime;
-            page.Duration = durationTime;
+            page.TotalMiliseconds = totalTime;
+            page.DurationMilliseconds = durationTime;
             return new PagedList<TModel>(page, data);
         }
 

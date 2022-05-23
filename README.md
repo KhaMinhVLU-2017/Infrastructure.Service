@@ -10,6 +10,6 @@ Its effects on the fluent syntax of Linq keep deferred execution after the build
 - You can build the query you want it todo.
 - Count timing query duration.
 
-You can view more installation & setup guid **[Infrastructure Service](https://www.mnlifeblog.com/posts/Dynamic-Search-post21.html)**
+You can view more installation & setup guid **[Infrastructure Service](https://www.mnlifeblog.com/posts/Dynamic-Search-(continue)-post22.html)**
 
 **Thanks for watching...!**

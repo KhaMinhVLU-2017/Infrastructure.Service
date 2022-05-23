@@ -1,8 +1,10 @@
 using System;
+using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
+using System.Linq.Dynamic.Core;
 using System.Collections.Generic;
 using Infrastructure.Service.Model;
 using Infrastructure.Service.Operate;
@@ -96,33 +98,46 @@ namespace Infrastructure.Service
             _parse.SetTypeValue(GetPropertyTypeByKey(criteria.Key));
             var value = _parse.ParseByVal(criteria.Value);
 
-            string rawQuery = "";
-            rawQuery += operateParse.Item1;
+            StringBuilder rawQuery = new StringBuilder();
+            rawQuery.Append(operateParse.Item1);
             if (operateParse.Item2)
             {
-                rawQuery += "(@0)";
+                rawQuery.Append("(@0)");
             }
             else
             {
-                rawQuery += criteria.Key;
+                rawQuery.Append(criteria.Key);
             }
-            rawQuery += operateParse.Item3;
+            rawQuery.Append(operateParse.Item3);
             if (operateParse.Item2)
             {
-                rawQuery += $"({criteria.Key})";
+                rawQuery.Append($"({criteria.Key})");
             }
             else
             {
-                rawQuery += $"(@0)";
+                rawQuery.Append("(@0)");
             }
 
-            return new Tuple<string, object>(rawQuery, value);
+            return new Tuple<string, object>(rawQuery.ToString(), value);
         }
 
         private Type GetPropertyTypeByKey(string key)
         {
-            PropertyInfo p = _entityType.GetProperties().First(s => s.Name.Equals(key, StringComparison.OrdinalIgnoreCase));
-            return p.PropertyType;
+            bool isHasMultipleKey = key.Contains(".");
+            if (!isHasMultipleKey)
+            {
+                PropertyInfo p = _entityType.GetProperties().First(s => s.Name.Equals(key, StringComparison.OrdinalIgnoreCase));
+                return p.PropertyType;
+            }
+
+            string[] keys = key.Split(".");
+            Type et = _entityType;
+            foreach (var k in keys)
+            {
+                PropertyInfo p = et.GetProperties().First(s => s.Name.Equals(key, StringComparison.OrdinalIgnoreCase));
+                et = p.PropertyType;
+            }
+            return et;
         }
 
         public void SetEntityType(Type type)

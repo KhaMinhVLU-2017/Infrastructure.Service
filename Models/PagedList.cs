@@ -20,9 +20,9 @@ namespace Infrastructure.Service.Model
         public int Count { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public double Duration { get; set; }
-        public double QueryDuration { get; set; }
-        public double TotalTime { get; set; }
+        public double DurationMilliseconds { get; set; }
+        public double QueryMilliseconds { get; set; }
+        public double TotalMiliseconds { get; set; }
 
         public static Page Create(int pageIndex, int pageSize, int totalItemCount, int itemCount, double queryDuration)
         {
@@ -32,7 +32,7 @@ namespace Infrastructure.Service.Model
                 PageSize = pageSize,
                 TotalCount = totalItemCount,
                 Count = itemCount,
-                QueryDuration = queryDuration
+                QueryMilliseconds = queryDuration
             };
         }
     }
