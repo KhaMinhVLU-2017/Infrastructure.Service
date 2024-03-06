@@ -2,11 +2,11 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Infrastructure.Service.Model;
-using Infrastructure.Services.Abstractions;
+using Infrastructure.Service.Abstraction;
 
 namespace Infrastructure.Service.Implementation
 {
-    public class FilterConverter: IFilterConverter
+    public class FilterConverter : IFilterConverter
     {
         private const string AND_OPERATOR = "and";
         private const string OR_OPERATOR = "or";
@@ -84,13 +84,13 @@ namespace Infrastructure.Service.Implementation
 
         private bool TryParseJArray(string request, out JArray result)
         {
-			result = default(JArray);
-			try
+            result = default(JArray);
+            try
             {
-				bool hasArray = request.StartsWith("[") && request.EndsWith("]");
-				if (!hasArray) return false;
+                bool hasArray = request.StartsWith("[") && request.EndsWith("]");
+                if (!hasArray) return false;
 
-				JArray criteriaArray = JArray.Parse(request);
+                JArray criteriaArray = JArray.Parse(request);
                 result = criteriaArray;
                 return true;
             }

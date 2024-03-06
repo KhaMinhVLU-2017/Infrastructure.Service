@@ -1,6 +1,6 @@
 using Infrastructure.Service.Model;
 
-namespace Infrastructure.Services.Abstractions
+namespace Infrastructure.Service.Abstraction
 {
     public interface IFilterConverter
     {

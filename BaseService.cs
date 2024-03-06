@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using Infrastructure.Service.Model;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Service.Abstraction;
-using Infrastructure.Services.Abstractions;
 using Infrastructure.Repository.Model.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Repository.Implement.Abstraction;
@@ -19,12 +18,10 @@ namespace Infrastructure.Service
 
     {
         private IServiceProvider _serviceProvider;
-        private IRepository<TEntity, TKey> _repository;
         private Expression<Func<TEntity, TModel>> _projection { get; set; }
 
         public BaseService(IRepository<TEntity, TKey> repository, IServiceProvider serviceProvider, Expression<Func<TEntity, TModel>> projection)
         {
-            _repository = repository;
             _projection = projection;
             _serviceProvider = serviceProvider;
         }
@@ -66,8 +63,9 @@ namespace Infrastructure.Service
                 var dbType = GetDbType();
                 var context = scope.ServiceProvider.GetService(dbType);
                 var compiler = scope.ServiceProvider.GetRequiredService<IFilterConverter>();
+                var sortConverter = scope.ServiceProvider.GetRequiredService<ISortConverter>();
                 var query = AsQueryable(context);
-                query = BuildQuery(query, compiler, criteria);
+                query = BuildQuery(query, compiler, sortConverter, criteria);
 
                 var (pageIndex, pageSize) = HandlerPaging(criteria);
                 var totalItemCount = await query.CountAsync();
@@ -88,8 +86,9 @@ namespace Infrastructure.Service
                 var dbType = GetDbType();
                 var context = scope.ServiceProvider.GetService(dbType);
                 var compiler = scope.ServiceProvider.GetRequiredService<IFilterConverter>();
+                var sortConverter = scope.ServiceProvider.GetRequiredService<ISortConverter>();
                 var query = AsQueryable(context);
-                query = BuildQuery(query, compiler, criteria);
+                query = BuildQuery(query, compiler, sortConverter, criteria);
 
                 var (pageIndex, pageSize) = HandlerPaging(criteria);
                 query = query.Skip(pageIndex * pageSize).Take(pageSize);
@@ -98,18 +97,18 @@ namespace Infrastructure.Service
             }
         }
 
-        private IQueryable<TEntity> BuildQuery(IQueryable<TEntity> entities, IFilterConverter filterCompiler, TCriteria criteria)
+        private IQueryable<TEntity> BuildQuery(IQueryable<TEntity> entities, IFilterConverter filterCompiler, ISortConverter sortConverter, TCriteria criteria)
         {
-			filterCompiler.Deserialize<TEntity>(criteria.Filters);
+            filterCompiler.Deserialize<TEntity>(criteria.Filters);
             var criteriaValue = filterCompiler.Compile();
             if (criteriaValue != null)
                 entities = entities.Where(criteriaValue.Query, criteriaValue.Arguments);
 
             if (criteria.Sorts != null && !string.IsNullOrEmpty(criteria.Sorts))
             {
-                // TODO SortCompiler
-                //var sortCriteria = compiler.DeserializeModel<Sort>(criteria.Sorts);
-                //entities = ExpressionHelper.OrderBy<TEntity>(entities, sortCriteria);
+                sortConverter.Deserialize(criteria.Sorts);
+                string sorts = sortConverter.Compile();
+                entities = entities.OrderBy(sorts);
             }
 
             return entities;

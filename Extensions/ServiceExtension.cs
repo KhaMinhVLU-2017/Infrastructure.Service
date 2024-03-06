@@ -2,7 +2,6 @@ using Infrastructure.Service.Model;
 using Infrastructure.Service.Validation;
 using Infrastructure.Service.Abstraction;
 using Microsoft.Extensions.Configuration;
-using Infrastructure.Services.Abstractions;
 using Infrastructure.Service.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +19,7 @@ namespace Infrastructure.Service.Extension
                 return dynamic;
             });
 
+            serviceCollection.AddScoped<ISortConverter, SortConverter>();
             serviceCollection.AddScoped<IValidation, SearchValidation>();
             serviceCollection.AddScoped<IFilterConverter, FilterConverter>();
         }
