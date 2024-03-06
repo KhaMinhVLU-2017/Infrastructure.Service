@@ -5,12 +5,11 @@ namespace Infrastructure.Service.Validation
 {
     public class SearchValidation : IValidation
     {
-        private ICompiler _compiler;
         private DynamicConfig _dynamicConfig;
 
-        public SearchValidation(ICompiler compiler, DynamicConfig dynamicConfig)
+        public SearchValidation( DynamicConfig dynamicConfig)
         {
-            _compiler = compiler;
+
             _dynamicConfig = dynamicConfig;
         }
 

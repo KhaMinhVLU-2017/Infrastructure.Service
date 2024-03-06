@@ -4,9 +4,9 @@ using Infrastructure.Service.TypeParser;
 
 namespace Infrastructure.Service.Operate
 {
-    public class LessThanOperate : BaseOperate
+    public class EqualsOperate : BaseOperate
     {
-        public LessThanOperate(Criteria criteria, Type entityType) : base(criteria, entityType)
+        public EqualsOperate(Criteria criteria, Type entityType) : base(criteria, entityType)
         {
         }
 
@@ -15,7 +15,7 @@ namespace Infrastructure.Service.Operate
             var proType = GetPropertType();
             var typeConverter = TypeConvertFactory.CreateTypeConverter(proType, Criteria.Value);
             var value = typeConverter.ConvertPrimitive();
-            string query = $"{Criteria.Key} < @@";
+            string query = $"{Criteria.Key} == @@";
             return new CriteriaValue(query, value);
         }
     }

@@ -1,17 +1,28 @@
 using System;
+using Infrastructure.Service.Model;
+using Infrastructure.Service.TypeParser;
 
 namespace Infrastructure.Service.Operate
 {
-    public class InOperate : Operate
+    public class InOperate : BaseOperate
     {
-        public InOperate()
+        public InOperate(Criteria criteria, Type entityType) : base(criteria, entityType)
         {
-            TYPE = ".Contains";
         }
 
-        public override Tuple<string, bool, string> Parse()
+        public override CriteriaValue Compile()
         {
-            return new Tuple<string, bool, string>(string.Empty, true, TYPE);
+            var proType = GetPropertType();
+            string[] args = Criteria.Value.Split(",");
+            object[] values = new object[args.Length];
+            for (int i = 0; i < values.Length; i++)
+            {
+                var typeConverter = TypeConvertFactory.CreateTypeConverter(proType, args[i]);
+                values[i] = typeConverter.ConvertPrimitive();
+            }
+            string query = $"@@.Contains({Criteria.Key})";
+            object arg = values;
+            return new CriteriaValue(query, arg);
         }
     }
 }

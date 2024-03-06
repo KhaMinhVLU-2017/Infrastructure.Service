@@ -1,18 +1,22 @@
 using System;
-using Infrastructure.Service.Common;
+using Infrastructure.Service.Model;
+using Infrastructure.Service.TypeParser;
 
 namespace Infrastructure.Service.Operate
 {
-    public class LessThanEqualOperate : Operate
+    public class LessThanEqualOperate : BaseOperate
     {
-        public LessThanEqualOperate()
+        public LessThanEqualOperate(Criteria criteria, Type entityType) : base(criteria, entityType)
         {
-            TYPE = "<=";
         }
 
-        public override Tuple<string, bool, string> Parse()
+        public override CriteriaValue Compile()
         {
-            return new Tuple<string, bool, string>(string.Empty, false, TYPE);
+            var proType = GetPropertType();
+            var typeConverter = TypeConvertFactory.CreateTypeConverter(proType, Criteria.Value);
+            var value = typeConverter.ConvertPrimitive();
+            string query = $"{Criteria.Key} <= @@";
+            return new CriteriaValue(query, value);
         }
     }
 }
