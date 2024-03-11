@@ -36,7 +36,7 @@ namespace Infrastructure.Service
             // Duration miliseconds
             DateTime startDuration = DateTime.UtcNow;
             var validation = _serviceProvider.GetRequiredService<IValidation>();
-            validation.Validate(criteria);
+            validation.Validate<TEntity>(criteria);
             var dataTask = BuildQueryAsync(criteria);
             var pageTask = BuildDurationAsync(criteria);
             await Task.WhenAll(pageTask, dataTask);

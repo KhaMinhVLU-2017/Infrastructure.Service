@@ -2,6 +2,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Infrastructure.Service.Model;
+using Infrastructure.Service.Helper;
 using Infrastructure.Service.Abstraction;
 
 namespace Infrastructure.Service.Implementation
@@ -35,7 +36,7 @@ namespace Infrastructure.Service.Implementation
         {
             if (string.IsNullOrEmpty(request)) return;
 
-            bool isArray = TryParseJArray(request, out JArray criteriaArray);
+            bool isArray = JsonHelper.TryParseJArray(request, out JArray criteriaArray);
             if (isArray)
             {
                 foreach (var item in criteriaArray)
@@ -80,24 +81,6 @@ namespace Infrastructure.Service.Implementation
 
             var criteria = _criteriaConverter.Build();
             return criteria;
-        }
-
-        private bool TryParseJArray(string request, out JArray result)
-        {
-            result = default(JArray);
-            try
-            {
-                bool hasArray = request.StartsWith("[") && request.EndsWith("]");
-                if (!hasArray) return false;
-
-                JArray criteriaArray = JArray.Parse(request);
-                result = criteriaArray;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }

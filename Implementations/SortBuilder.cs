@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using Infrastructure.Service.Model;
 
-namespace Infrastructure.Services.Implementations
+namespace Infrastructure.Service.Implementations
 {
     public class SortBuilder
     {
@@ -20,7 +20,7 @@ namespace Infrastructure.Services.Implementations
         {
             bool hasNest = request.Key.Contains(".");
             if (hasNest)
-                throw new Exception("Order not support nested.");
+                throw new System.Exception("Order not support nested.");
 
             return $"{request.Key} {ConvertSortName(request.Criteria)}";
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Services.Implementations
             if (sort.Equals(ASC_SORT, StringComparison.InvariantCultureIgnoreCase)) return sort;
             if (sort.Equals(DESC_SORT, StringComparison.InvariantCultureIgnoreCase)) return sort;
 
-            throw new Exception($"The {sort} type not exist!");
+            throw new System.Exception($"The {sort} type not exist!");
         }
     }
 }

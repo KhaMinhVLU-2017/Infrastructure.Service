@@ -11,12 +11,12 @@ namespace Infrastructure.Service.Extension
     {
         public static void AddSearchService(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<DynamicConfig>(services =>
+            serviceCollection.AddSingleton<SearchRestrictionDictionary>(services =>
             {
                 var configuration = services.GetRequiredService<IConfiguration>();
-                var dynamic = new DynamicConfig();
-                configuration.GetSection("DynamicSearch").Bind(dynamic);
-                return dynamic;
+                var restrict = new SearchRestrictionDictionary();
+                configuration.GetSection("SearchRestrictions").Bind(restrict);
+                return restrict;
             });
 
             serviceCollection.AddScoped<ISortConverter, SortConverter>();
