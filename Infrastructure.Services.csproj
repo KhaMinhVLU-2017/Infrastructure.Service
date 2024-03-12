@@ -3,19 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
      <PackageId>Infrastructure.Service</PackageId>
-    <Version>3.0.2</Version>
+    <Version>4.0.0</Version>
     <Authors>Minh Nguyen</Authors>
     <Company>Self Company</Company>
-    <PackageTags>Service; Paging; EF Core; Microsoft</PackageTags>
     <Description>
-      Dynamic search without Type
-      You can build the query you want it to do.
+      You can query entity by dynamic criteria build on Front-end.
+      Allow sorts, paging and restriction fields.
     </Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>icon.jpg</PackageIcon>
     <PackageProjectUrl>https://www.mnlifeblog.com/posts/Dynamic-Search-(continue)-post23.html</PackageProjectUrl>
-    <PackageTags>.NET ASP.NET .NetCore LINQ DynamicSearch EFCore</PackageTags>
-     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>.NET ASP.NET .NetCore LINQ DynamicSearch EFCore CSharp</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
