@@ -37,7 +37,7 @@ namespace Infrastructure.Service.Validation
             var keys = Flatten(criteria);
             bool hasRestriction = keys.Any(key => propertiesRestrict.Any(x => x.Equals(key, StringComparison.InvariantCultureIgnoreCase)));
             if (hasRestriction)
-                throw new System.Exception("The field are restriction!");
+                throw new System.Exception("The field is restricted!");
         }
 
         private string[] Flatten(BaseCriteria criteria)
