@@ -9,11 +9,12 @@
 ## Overview
 
 - Open end-point API allow build dynamic query for searching and paging. It **auto compile query from text** on Front-end to **Expression Tree** Linq.
-- Integration with **Infrastructure.Repository**
+- Integration with [Infrastructure.Repository](https://www.nuget.org/packages/Infrastructure.Repository!)
+- Support .NetCore if you want run on .NetFramework you need override the **Repository Layer**
 
 ## Installation
 
-To install Infrastructure Service (<font color=#0fb503>Infrastructure.Service</font>) library, right-click on your project in Solution Explore,then select **Manage NuGet Packages...**, and install the following package.
+To install Infrastructure Service [Infrastructure.Service](https://www.nuget.org/packages/Infrastructure.Service!) library, right-click on your project in Solution Explore,then select **Manage NuGet Packages...**, and install the following package.
 
 - Infrastructure.Service
 
