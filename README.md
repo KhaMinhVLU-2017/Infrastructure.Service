@@ -160,4 +160,6 @@ The **user's property** on JSON will be matched to the **name** of the entity.
 
 Throw exception message: "<font color=red>The field is restricted!</font>" when you access to field restricted.
 
+Source: https://github.com/KhaMinhVLU-2017/Infrastructure.Service
+
 **<font color=#0fb503>_Thanks for watching_</font>**
