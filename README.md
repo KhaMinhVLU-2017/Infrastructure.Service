@@ -24,9 +24,9 @@ You can also install this library using **.NET CLI**
 dotnet add package Infrastructure.Service --version 4.0.0
 ```
 
-Setup code base, It similar version 3.x.x
+[Setup code base, It similar version 3.x.x]
 
-- [Guide for setup code](<!https://www.mnlifeblog.com/posts/Dynamic-Search-(continue)-post23.html>)
+- [Guide for setup code](https://www.mnlifeblog.com/posts/Dynamic-Search-(continue)-post23.html!)
 
 ## Basic Usage
 
