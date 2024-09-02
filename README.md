@@ -21,7 +21,7 @@ To install Infrastructure Service [Infrastructure.Service](https://www.nuget.org
 You can also install this library using **.NET CLI**
 
 ```cs
-dotnet add package Infrastructure.Service --version 4.0.1
+dotnet add package Infrastructure.Service --version 4.0.3
 ```
 
 Setup code base, It similar version 3.x.x
