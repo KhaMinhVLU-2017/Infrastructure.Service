@@ -10,6 +10,7 @@ namespace Infrastructure.Service.TypeParser
 
         public override object ConvertPrimitive()
         {
+            if (_value is null) return string.Empty;
             return _value.Trim();
         }
     }
