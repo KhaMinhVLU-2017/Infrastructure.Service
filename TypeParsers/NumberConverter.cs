@@ -11,31 +11,31 @@ namespace Infrastructure.Service.TypeParser
 
         public override object ConvertPrimitive()
         {
-            if (_type == typeof(int))
+            if (_type == typeof(int) || _type == typeof(Nullable<int>))
             {
                 int.TryParse(_value, out int result);
                 return result;
             }
 
-            if (_type == typeof(decimal))
+            if (_type == typeof(decimal) || _type == typeof(Nullable<decimal>))
             {
                 decimal.TryParse(_value, out decimal result);
                 return result;
             }
 
-            if (_type == typeof(double))
+            if (_type == typeof(double) || _type == typeof(Nullable<double>))
             {
                 double.TryParse(_value, out double result);
                 return result;
             }
 
-            if (_type == typeof(long))
+            if (_type == typeof(long) || _type == typeof(Nullable<long>))
             {
                 long.TryParse(_value, out long result);
                 return result;
             }
 
-            if (_type == typeof(short))
+            if (_type == typeof(short) || _type == typeof(Nullable<short>))
             {
                 short.TryParse(_value, out short result);
                 return result;
