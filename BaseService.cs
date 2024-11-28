@@ -101,8 +101,9 @@ namespace Infrastructure.Service
         {
             filterCompiler.Deserialize<TEntity>(criteria.Filters);
             var criteriaValue = filterCompiler.Compile();
+            var config = new ParsingConfig { ResolveTypesBySimpleName = true };
             if (criteriaValue != null)
-                entities = entities.Where(criteriaValue.Query, criteriaValue.Arguments);
+                entities = entities.Where(config, criteriaValue.Query, criteriaValue.Arguments);
 
             if (criteria.Sorts != null && !string.IsNullOrEmpty(criteria.Sorts))
             {

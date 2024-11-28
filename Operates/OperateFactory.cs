@@ -28,6 +28,8 @@ namespace Infrastructure.Service.Operate
                     return new NotInOperate(request, entityType);
                 case "btw":
                     return new BetweenOperate(request, entityType);
+                case "like":
+                    return new LikeOperate(request, entityType);
                 default:
                     throw new System.Exception("Operate not exist");
             }

@@ -8,6 +8,8 @@ namespace Infrastructure.Service.TypeParser
         {
             if (type == typeof(string))
                 return new TextConverter(type, value);
+            if (type == typeof(Guid) || type == typeof(Nullable<Guid>))
+                return new GuidConverter(type, value);
             if (type == typeof(int) || type == typeof(Nullable<int>) ||
                 type == typeof(double) || type == typeof(Nullable<double>) ||
                 type == typeof(decimal) || type == typeof(Nullable<decimal>) ||
