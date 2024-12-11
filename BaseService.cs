@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Infrastructure.Service.Model;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Service.Abstraction;
+using Infrastructure.Services.TypeProviders;
 using Infrastructure.Repository.Model.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Repository.Implement.Abstraction;
@@ -17,6 +18,7 @@ namespace Infrastructure.Service
                                                                                                                   where TEntity : class, IEntity<TKey>
 
     {
+        private ParsingConfig _parsingConfig = new ParsingConfig { CustomTypeProvider = new LikeFunctionTypeProvider() };
         private IServiceProvider _serviceProvider;
         private Expression<Func<TEntity, TModel>> _projection { get; set; }
 
@@ -101,9 +103,8 @@ namespace Infrastructure.Service
         {
             filterCompiler.Deserialize<TEntity>(criteria.Filters);
             var criteriaValue = filterCompiler.Compile();
-            var config = new ParsingConfig { ResolveTypesBySimpleName = true };
             if (criteriaValue != null)
-                entities = entities.Where(config, criteriaValue.Query, criteriaValue.Arguments);
+                entities = entities.Where(_parsingConfig, criteriaValue.Query, criteriaValue.Arguments);
 
             if (criteria.Sorts != null && !string.IsNullOrEmpty(criteria.Sorts))
             {

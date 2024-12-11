@@ -9,9 +9,7 @@ namespace Infrastructure.Services.TypeProviders
 {
     public class LikeFunctionTypeProvider : DefaultDynamicLinqCustomTypeProvider
     {
-        public LikeFunctionTypeProvider(ParsingConfig config, bool cacheCustomTypes = true) : base(config, cacheCustomTypes)
-        {
-        }
+        public LikeFunctionTypeProvider() : base(ParsingConfig.Default, true) { }
 
         public override HashSet<Type> GetCustomTypes() => new[] { typeof(EF), typeof(DbFunctions), typeof(DbFunctionsExtensions) }.ToHashSet();
     }
