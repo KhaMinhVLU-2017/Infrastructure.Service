@@ -5,7 +5,7 @@ using Infrastructure.Service.Model;
 
 namespace Infrastructure.Service.Operate
 {
-    public abstract class BaseOperate: IOperate
+    public abstract class BaseOperate : IOperate
     {
         protected Criteria Criteria;
         protected Type EntityType;
@@ -19,7 +19,7 @@ namespace Infrastructure.Service.Operate
             return GetPropertyTypeByName(EntityType, Criteria.Key);
         }
 
-        private Type GetPropertyTypeByName(Type root, string name)
+        protected virtual Type GetPropertyTypeByName(Type root, string name)
         {
             if (!name.Contains("."))
             {
@@ -54,5 +54,12 @@ namespace Infrastructure.Service.Operate
 
             throw new System.Exception("Type not found");
         }
+
+        // protected string GetGenericType(Type root, string name)
+        // {
+        //     // TODO Get generics for build query
+
+        //     // groupusers.Any(@0.Contains(id))
+        // }
     }
 }

@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
      <PackageId>Infrastructure.Service</PackageId>
-    <Version>4.0.3</Version>
+    <Version>4.0.5</Version>
     <Authors>Minh Nguyen</Authors>
     <Company>Self Company</Company>
     <Description>
-      You can query entity by dynamic criteria build on Front-end.
+      You can query entities by dynamic criteria built on the front end.
       Allow sorts, paging and restriction fields.
     </Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

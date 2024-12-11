@@ -1,11 +1,12 @@
 using System;
+using System.Linq;
 using Infrastructure.Service.Model;
-using Infrastructure.Service.TypeParser;
 
 namespace Infrastructure.Service.Operate
 {
-    public class InOperate : BaseOperate
+    public class InOperate : InCollectionOperate
     {
+
         public InOperate(Criteria criteria, Type entityType) : base(criteria, entityType)
         {
         }
@@ -13,16 +14,16 @@ namespace Infrastructure.Service.Operate
         public override CriteriaValue Compile()
         {
             var proType = GetPropertType();
-            string[] args = Criteria.Value.Split(",");
-            object[] values = new object[args.Length];
-            for (int i = 0; i < values.Length; i++)
+            bool hasCollection = Propertytypes.Any(s => s.IsCollection);
+            if (hasCollection)
             {
-                var typeConverter = TypeConvertFactory.CreateTypeConverter(proType, args[i]);
-                values[i] = typeConverter.ConvertPrimitive();
+                var inCollectionOperate = new InCollectionOperate(Criteria, EntityType);
+                return inCollectionOperate.Compile();
             }
-            string query = $"@@.Contains({Criteria.Key})";
-            object arg = values;
-            return new CriteriaValue(query, arg);
+
+            var inPrimitiveOperate = new InPrimitiveOperate(Criteria, EntityType);
+            return inPrimitiveOperate.Compile();
         }
+
     }
 }

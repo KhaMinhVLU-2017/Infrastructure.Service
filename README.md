@@ -21,7 +21,7 @@ To install Infrastructure Service [Infrastructure.Service](https://www.nuget.org
 You can also install this library using **.NET CLI**
 
 ```cs
-dotnet add package Infrastructure.Service --version 4.0.3
+dotnet add package Infrastructure.Service --version 4.0.5
 ```
 
 Setup code base, It similar version 3.x.x
@@ -48,8 +48,8 @@ var result = context.Users.Where(s => s.Website == "www.mnlifeblog.com");
 
 Infrastructure.Service look like:
 
-- JSON: {"Key":"website","Operate":"eq","Value":"www.mnlifeblog.com"}
-- Example API: {{host}}/users?filters={"Key":"website","Operate":"eq","Value":"www.mnlifeblog.com"}
+- JSON: ```{"Key":"website","Operate":"eq","Value":"www.mnlifeblog.com"}```
+- Example API: ```{{host}}/users?filters={"Key":"website","Operate":"eq","Value":"www.mnlifeblog.com"}```
 
 #### Multiple query
 
@@ -63,8 +63,22 @@ var result = context.Users.Where(s => s.Website == "www.mnlifeblog.com" ||
 
 That code can be used when using Infrastructure.Service
 
-- JSON: {"or":[{"Key":"website","Operate":"eq","Value":"www.mnlifeblog.com"},{"Key":"name","Operate":"eq","Value":"mnlifeblog"}]}
-- Example API: {{host}}/users?filters={"or":[{"Key":"website","Operate":"eq","Value":"www.mnlifeblog.com"},{"Key":"name","Operate":"eq","Value":"mnlifeblog"}]}
+- JSON: ```{"or":[{"Key":"website","Operate":"eq","Value":"www.mnlifeblog.com"},{"Key":"name","Operate":"eq","Value":"mnlifeblog"}]}```
+- Example API: ```{{host}}/users?filters={"or":[{"Key":"website","Operate":"eq","Value":"www.mnlifeblog.com"},{"Key":"name","Operate":"eq","Value":"mnlifeblog"}]}```
+
+**Nested query**  
+In this case, we need looking `messages` have user in specific GroupMembers (19617efd-a96e-4eb3-851b-ec41ea966571 and e15bf9b9-3427-4f4b-b217-eafeef184f4a)
+```cs
+Guid[] groupIds = new Guid[2] {
+                Guid.Parse("19617efd-a96e-4eb3-851b-ec41ea966571"),
+                Guid.Parse("e15bf9b9-3427-4f4b-b217-eafeef184f4a")
+            };
+var result = repository.FindAll(s => s.FromUser.GroupMembers.Any(s => s.Id == groupIds[0] || s.Id == groupIds[1]));
+```
+That code can be used when using Infrastructure.Service
+- JSON: ```{"key": "FromUser.GroupMembers.Id", "operate":"in", "value":"54069645-c8e4-450d-9712-0015399ee342"}```
+- Example API: ```{"key": "FromUser.GroupMembers.Id", "operate":"in", "value":"19617efd-a96e-4eb3-851b-ec41ea966571, e15bf9b9-3427-4f4b-b217-eafeef184f4a"}```
+
 
 **Operand summary table**
 
@@ -79,6 +93,7 @@ That code can be used when using Infrastructure.Service
 | in      | Contains  | Contains            |
 | nin     | !Contains | Not Contains        |
 | btw     | >= <=     | Between             |
+| like    | like      | find relative value |
 
 ### Sorts
 
@@ -92,8 +107,8 @@ When use **orderby** on Linq:
 
 The code can be use on Infrastructure.Service:
 
-- JSON: {"key":"website","criteria":"asc"}
-- Example API: {{host}}/users?sorts={"key":"website","criteria":"asc"}
+- JSON: ```{"key":"website","criteria":"asc"}```
+- Example API: ```{{host}}/users?sorts={"key":"website","criteria":"asc"}```
 
 When you want to apply **DESC** for sort you just alter _asc_ to _desc_.
 
@@ -107,14 +122,14 @@ The strongly typed LINQ:
 
 The code you can build:
 
-- JSON: [{"key":"website","criteria":"asc"},{"key":"date","criteria":"desc"}]
-- Example API: {{host}}/users?sorts=[{"key":"website","criteria":"asc"},{"key":"date","criteria":"desc"}]
+- JSON: ```[{"key":"website","criteria":"asc"},{"key":"date","criteria":"desc"}]```
+- Example API: ```{{host}}/users?sorts=[{"key":"website","criteria":"asc"},{"key":"date","criteria":"desc"}]```
 
 ### Paging
 
 Depend on pageIndex and pageSize field for paging
 
-- Example API: {{host}}/users?pageIndex=1&&pageSize=20
+- Example API: ```{{host}}/users?pageIndex=1&&pageSize=20```
 
 The payload response:
 
